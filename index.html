@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nosso Presente</title>
+  <style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: #08080c;
+    color: #ffffff;
+    overflow-x: hidden;
+  }
+
+  section {
+    min-height: 100vh;
+    padding: 70px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .container {
+    width: 100%;
+    max-width: 430px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .tag {
+    display: inline-block;
+    padding: 8px 16px;
+    margin-bottom: 20px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.12);
+    color: #ffb6d5;
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+
+  h1 {
+    font-size: 2.7rem;
+    margin: 22px 0 10px;
+    color: #ffffff;
+  }
+
+  h2 {
+    font-size: 1.7rem;
+    margin-bottom: 10px;
+  }
+
+  p {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #ddd;
+  }
+
+  button {
+    border: none;
+    cursor: pointer;
+    margin-top: 24px;
+    padding: 15px 26px;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #ff4f9a, #ff8fb8);
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+    box-shadow: 0 0 25px rgba(255, 79, 154, 0.45);
+  }
+
+  #capa {
+    background:
+      radial-gradient(circle at top, rgba(255, 79, 154, 0.25), transparent 40%),
+      linear-gradient(180deg, #11111a, #08080c);
+  }
+
+  .foto-capa {
+    width: 100%;
+    max-width: 330px;
+    height: 420px;
+    object-fit: cover;
+    border-radius: 28px;
+    box-shadow: 0 0 45px rgba(255, 79, 154, 0.25);
+  }
+
+  .artista {
+    color: #aaa;
+    font-size: 0.95rem;
+  }
+
+  #tempo-juntos {
+    background:
+      radial-gradient(circle at bottom, rgba(255, 79, 154, 0.18), transparent 45%),
+      #0d0d14;
+  }
+
+  .subtitulo {
+    margin-bottom: 28px;
+    color: #aaa;
+  }
+
+  .contador {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+
+  .contador div {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 20px;
+    padding: 18px 8px;
+  }
+
+  .contador span {
+    display: block;
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: #ffb6d5;
+  }
+
+  .contador small {
+    font-size: 0.78rem;
+    color: #ccc;
+  }
+
+  #mensagem {
+    background:
+      linear-gradient(180deg, #08080c, #150914);
+  }
+
+  .card-mensagem {
+    padding: 28px;
+    border-radius: 28px;
+    background: linear-gradient(135deg, #ffb36b, #ff8fb8);
+    color: #2b0718;
+    text-align: left;
+    box-shadow: 0 0 45px rgba(255, 143, 184, 0.25);
+  }
+
+  .card-mensagem .tag {
+    background: rgba(255, 255, 255, 0.4);
+    color: #8b174b;
+  }
+
+  .card-mensagem h2 {
+    color: #2b0718;
+  }
+
+  .card-mensagem p {
+    color: #2b0718;
+    font-weight: 500;
+  }
+
+  .texto-escondido {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: all 0.8s ease;
+  }
+
+  .texto-escondido.ativo {
+    max-height: 900px;
+    opacity: 1;
+    margin-top: 18px;
+  }
+
+  .card-mensagem button {
+    background: white;
+    color: #8b174b;
+    box-shadow: none;
+  }
+
+  #horas-juntos {
+    background:
+      radial-gradient(circle, rgba(255, 214, 232, 0.12), transparent 50%),
+      #050509;
+  }
+
+  #totalHoras {
+    font-size: 4rem;
+    font-weight: 900;
+    margin: 18px 0;
+    color: #ffffff;
+    text-shadow: 0 0 30px rgba(255, 182, 213, 0.55);
+  }
+
+  #momentos {
+  background:
+    radial-gradient(circle at top, rgba(255, 79, 154, 0.16), transparent 45%),
+    #0b0b10;
+}
+
+.galeria {
+  margin-top: 28px;
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  padding: 10px 4px 22px;
+  scroll-snap-type: x mandatory;
+}
+
+.galeria img {
+  min-width: 260px;
+  height: 390px;
+  object-fit: cover;
+  border-radius: 26px;
+  scroll-snap-align: center;
+  box-shadow: 0 0 25px rgba(255, 79, 154, 0.25);
+}
+
+#jornada {
+  background:
+    linear-gradient(180deg, #0b0b10, #160915);
+}
+
+.linha-tempo {
+  margin-top: 35px;
+  position: relative;
+  text-align: left;
+}
+
+.linha-tempo::before {
+  content: "";
+  position: absolute;
+  left: 14px;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: linear-gradient(#ff4f9a, #ffb6d5);
+  border-radius: 999px;
+}
+
+.evento {
+  position: relative;
+  margin-bottom: 28px;
+  padding-left: 44px;
+}
+
+.evento::before {
+  content: "❤️";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 31px;
+  height: 31px;
+  border-radius: 50%;
+  background: #1b0b17;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  box-shadow: 0 0 18px rgba(255, 79, 154, 0.5);
+}
+
+.evento span {
+  display: inline-block;
+  margin-bottom: 6px;
+  color: #ffb6d5;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+.evento h3 {
+  margin-bottom: 6px;
+  color: white;
+  font-size: 1.15rem;
+}
+
+.evento p {
+  color: #ccc;
+}
+
+#conexao {
+  background:
+    radial-gradient(circle, rgba(255, 182, 213, 0.18), transparent 48%),
+    #08080c;
+}
+
+#conexao h2 {
+  font-size: 2.8rem;
+  color: #ffb6d5;
+  margin: 15px 0;
+}
+
+.cards-conexao {
+  margin-top: 35px;
+  display: grid;
+  gap: 16px;
+}
+
+.cards-conexao div {
+  padding: 22px;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.09);
+  border: 1px solid rgba(255, 255, 255, 0.13);
+}
+
+.cards-conexao span {
+  display: block;
+  font-size: 2rem;
+  font-weight: 900;
+  color: #ffffff;
+}
+
+.cards-conexao small {
+  color: #ffb6d5;
+}
+
+#final {
+  background:
+    radial-gradient(circle at center, rgba(255, 79, 154, 0.30), transparent 45%),
+    linear-gradient(180deg, #160915, #050509);
+}
+
+#final h2 {
+  font-size: 4rem;
+  font-weight: 900;
+  color: #ffffff;
+  text-shadow: 0 0 35px rgba(255, 182, 213, 0.8);
+  animation: pulsarTexto 1.8s infinite;
+}
+
+#final p {
+  margin-top: 20px;
+  font-size: 1.15rem;
+  color: #ffeaf3;
+}
+
+.coracoes {
+  margin-top: 28px;
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+}
+
+.coracoes span {
+  font-size: 2.4rem;
+  animation: pulsarCoracao 1.4s infinite;
+}
+
+.coracoes span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.coracoes span:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes pulsarTexto {
+  0%, 100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.04);
+  }
+}
+
+@keyframes pulsarCoracao {
+  0%, 100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.25);
+  }
+}
+  
+  @media (max-width: 420px) {
+    h1 {
+      font-size: 2.3rem;
+    }
+
+    .foto-capa {
+      height: 380px;
+    }
+
+    .contador {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    #totalHoras {
+      font-size: 3.3rem;
+    }
+  }
+  
+  .foto-secao {
+  width: 100%;
+  max-width: 320px;
+  height: 390px;
+  object-fit: cover;
+  border-radius: 28px;
+  margin: 25px auto 30px;
+  display: block;
+  box-shadow: 0 0 35px rgba(255, 79, 154, 0.28);
+}
+
+.foto-redonda {
+  width: 135px;
+  height: 135px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin: 20px auto 25px;
+  display: block;
+  border: 4px solid rgba(255, 182, 213, 0.8);
+  box-shadow: 0 0 35px rgba(255, 79, 154, 0.45);
+}
+
+.foto-evento {
+  width: 78px;
+  height: 78px;
+  object-fit: cover;
+  border-radius: 18px;
+  margin-bottom: 12px;
+  border: 2px solid rgba(255, 182, 213, 0.75);
+  box-shadow: 0 0 20px rgba(255, 79, 154, 0.35);
+}
+
+ #final {
+  position: relative;
+  overflow: hidden;
+}
+
+.coracao-flutuante {
+  position: absolute;
+  bottom: -30px;
+  color: #ff8fbd;
+  font-size: 24px;
+  animation: subirCoracao 5s linear infinite;
+  opacity: 0.85;
+  pointer-events: none;
+}
+
+@keyframes subirCoracao {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 0;
+  }
+
+  15% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(-110vh) scale(1.8);
+    opacity: 0;
+  }
+}
+
+</style>
+</head>
+
+<body>
+
+  <!-- SEÇÃO 1: CAPA / PLAYER -->
+  <section id="capa">
+    <div class="container">
+
+      <p class="tag">Wrapped do casal</p>
+
+      <img src="capa.jpg" alt="Foto do casal" class="foto-capa">
+
+      <h1>Meu amor ❤️</h1>
+
+      <h2>Primeiros Erros / Esperando na Janela</h2>
+
+      <p class="artista">
+        Panda • Humberto & Ronaldo • Ícaro e Gilmar
+      </p>
+
+      <button id="botaoMusica">
+        ▶ Nossa música
+      </button>
+
+      <audio id="musica" src="musica.mp3"></audio>
+
+    </div>
+  </section>
+
+
+  <!-- SEÇÃO 2: TEMPO JUNTOS -->
+  <section id="tempo-juntos">
+    <div class="container">
+
+      <h2>⏳ Nosso tempo juntos</h2>
+
+      <p class="subtitulo">
+        Desde 04 de outubro de 2022
+      </p>
+      <img src="tempo.jpg" alt="Nós dois" class="foto-secao">
+
+      <div class="contador">
+        <div>
+          <span id="anos">0</span>
+          <small>Anos</small>
+        </div>
+
+        <div>
+          <span id="meses">0</span>
+          <small>Meses</small>
+        </div>
+
+        <div>
+          <span id="dias">0</span>
+          <small>Dias</small>
+        </div>
+
+        <div>
+          <span id="horas">0</span>
+          <small>Horas</small>
+        </div>
+
+        <div>
+          <span id="minutos">0</span>
+          <small>Minutos</small>
+        </div>
+
+        <div>
+          <span id="segundos">0</span>
+          <small>Segundos</small>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- SEÇÃO 3: MENSAGEM ESPECIAL -->
+  <section id="mensagem">
+    <div class="container">
+
+      <div class="card-mensagem">
+        <p class="tag">Mensagem especial</p>
+
+        <h2>Uma mensagem para você 💌</h2>
+
+        <p id="textoMensagem" class="texto-escondido">
+          Você é o amor da minha vida, a pessoa que todos os dias me faz querer ser melhor.
+          Você é a mulher do cabelo cacheado mais lindo que existe, sua beleza representa uma das grandes maravilhas do mundo,
+          tão única e tão perfeita, tu és bela internamente com sabedoria e com um coração nobre.
+          <br><br>
+          Tem o corpo que me envolve, que me provoca, uma química que conecta, uma beleza que me enche de calor e amores por ti.
+          <br><br>
+          Você é a estrada da minha subida, você é o amor da minha vida, é o meu abrir de olhos no amanhecer,
+          é o sorriso da minha felicidade, é o sol que ilumina a minha vida,
+          você é a razão que me leva a viver... 😍❤️❤️❤️
+        </p>
+
+        <button id="botaoMensagem">
+          Mostrar mensagem
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- SEÇÃO 4: HORAS JUNTOS -->
+  <section id="horas-juntos">
+    <div class="container">
+
+      <p class="tag">Horas juntos</p>
+
+      <h2 id="totalHoras">0</h2>
+
+      <p>
+        Cada uma delas valeu a pena ❤️
+      </p>
+
+    </div>
+  </section>
+  
+<!-- SEÇÃO 5: NOSSOS MOMENTOS -->
+<section id="momentos">
+  <div class="container">
+
+    <p class="tag">Nossos momentos</p>
+
+    <h2>Algumas lembranças que guardo com carinho 📸</h2>
+
+    <div class="galeria">
+      <img src="foto1.jpg" alt="Nosso momento 1">
+      <img src="foto2.jpg" alt="Nosso momento 2">
+      <img src="foto3.jpg" alt="Nosso momento 3">
+      <img src="foto4.jpg" alt="Nosso momento 4">
+      <img src="foto5.jpg" alt="Nosso momento 5">
+      <img src="foto6.jpg" alt="Nosso momento 6">
+      <img src="foto7.jpg" alt="Nosso momento 7">
+      <img src="foto8.jpg" alt="Nosso momento 8">
+      <img src="foto9.jpg" alt="Nosso momento 9">
+      <img src="foto10.jpg" alt="Nosso momento 10">
+      <img src="foto11.jpg" alt="Nosso momento 11">
+      <img src="foto12.jpg" alt="Nosso momento 12">
+      <img src="foto13.jpg" alt="Nosso momento 13">
+      <img src="foto14.jpg" alt="Nosso momento 14">
+      <img src="foto15.jpg" alt="Nosso momento 15">
+      <img src="foto16.jpg" alt="Nosso momento 16">
+      <img src="foto17.jpg" alt="Nosso momento 17">
+      <img src="foto18.jpg" alt="Nosso momento 18">
+      <img src="foto19.jpg" alt="Nosso momento 19">
+      <img src="foto20.jpg" alt="Nosso momento 20">
+      <img src="foto21.jpg" alt="Nosso momento 21">
+      <img src="foto22.jpg" alt="Nosso momento 22">
+      <img src="foto23.jpg" alt="Nosso momento 23">
+      <img src="foto24.jpg" alt="Nosso momento 24">
+    </div>
+
+  </div>
+</section>
+
+
+<!-- SEÇÃO 6: NOSSA JORNADA -->
+<section id="jornada">
+  <div class="container">
+
+    <p class="tag">Nossa jornada</p>
+
+    <h2>A nossa história, capítulo por capítulo ❤️</h2>
+
+    <div class="linha-tempo">
+
+      <div class="evento">
+        <img src="jornada1.jpg" alt="Primeiro beijo" class="foto-evento">
+
+        <span>22/07/2022</span>
+        <h3>Primeiro beijo</h3>
+        <p>O dia em que tudo começou.</p>
+      </div>
+
+      <div class="evento">
+        <img src="jornada2.jpg" alt="Primeiro beijo" class="foto-evento">
+
+        <span>04/10/2022</span>
+        <h3>Oficialmente namorados</h3>
+        <p>O primeiro capítulo sendo escrito da nossa história.</p>
+      </div>
+
+      <div class="evento">
+        <img src="jornada3.jpg" alt="Primeiro beijo" class="foto-evento">
+
+        <span>01/07/2023</span>
+        <h3>Primeira vitória</h3>
+        <p>Um momento que nossa união trouxe conquistas.</p>
+      </div>
+
+      <div class="evento">
+        <img src="jornada4.jpg" alt="Primeiro beijo" class="foto-evento">
+
+        <span>23/06/2025</span>
+        <h3>Conclusão do curso</h3>
+        <p>A finalização de uma grande etapa, o local que proporcionou a gente começar essa história.</p>
+      </div>
+
+      <div class="evento">
+        <img src="jornada5.jpg" alt="Primeiro beijo" class="foto-evento">
+
+        <span>20/12/2025</span>
+        <h3>O pedido de casamento</h3>
+        <p>Uma lembrança que ficou guardada, o sim mais feliz da minha vida.</p>
+      </div>
+
+      <div class="evento">
+        <img src="jornada6.jpg" alt="Primeiro beijo" class="foto-evento">
+
+        <span>17/01/2026</span>
+        <h3>Férias na praia</h3>
+        <p>Nosso primeiro descanso como peixinhos apaixonados 🐟</p>
+      </div>
+
+      <div class="evento">
+        <img src="jornada7.jpg" alt="Primeiro beijo" class="foto-evento">
+
+        <span>01/02/2026</span>
+        <h3>Caminhada até Nossa Senhora</h3>
+        <p>Sempre firmes e unidos na fé, a nossa base 🙏</p>
+      </div>
+
+      <div class="evento">
+        <img src="jornada8.jpg" alt="Primeiro beijo" class="foto-evento">
+
+        <span>Atualmente</span>
+        <h3>Contagem regressiva</h3>
+        <p>Prontos para adicionar mais um capítulo na nossa história.</p>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+
+<!-- SEÇÃO 7: NOSSA CONEXÃO -->
+<section id="conexao">
+  <div class="container">
+
+    <p class="tag">Nossa conexão</p>
+    <img src="conexao.jpg" alt="Nossa conexão" class="foto-redonda">
+
+    <h2>04/10/2022</h2>
+
+    <p>A data em que começamos oficialmente a escrever a nossa história.</p>
+
+    <div class="cards-conexao">
+      <div>
+        <span id="diasTotais">0</span>
+        <small>dias juntos</small>
+      </div>
+
+      <div>
+        <span id="horasTotaisConexao">0</span>
+        <small>horas juntos</small>
+      </div>
+
+      <div>
+        <span>8</span>
+        <small>capítulos marcantes</small>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- SEÇÃO 8: FINAL -->
+<section id="final">
+  <div class="container">
+
+    <h2>EU TE AMO</h2>
+
+    <p>
+      Hoje.<br>
+      Amanhã.<br>
+      E em todos os capítulos que ainda vamos escrever.
+    </p>
+
+    <div id="chuvaCoracoes"></div>
+
+  </div>
+</section>
+
+<script>
+  const dataInicio = new Date("2022-10-04T00:00:00");
+
+  const musica = document.getElementById("musica");
+  const botaoMusica = document.getElementById("botaoMusica");
+
+  botaoMusica.addEventListener("click", () => {
+    if (musica.paused) {
+      musica.play();
+      botaoMusica.innerText = "⏸ Pausar música";
+    } else {
+      musica.pause();
+      botaoMusica.innerText = "▶ Nossa música";
+    }
+  });
+
+  const botaoMensagem = document.getElementById("botaoMensagem");
+  const textoMensagem = document.getElementById("textoMensagem");
+
+  botaoMensagem.addEventListener("click", () => {
+    textoMensagem.classList.toggle("ativo");
+
+    if (textoMensagem.classList.contains("ativo")) {
+      botaoMensagem.innerText = "Esconder mensagem";
+    } else {
+      botaoMensagem.innerText = "Mostrar mensagem";
+    }
+  });
+
+  function atualizarTempo() {
+    const agora = new Date();
+
+    let anos = agora.getFullYear() - dataInicio.getFullYear();
+    let meses = agora.getMonth() - dataInicio.getMonth();
+    let dias = agora.getDate() - dataInicio.getDate();
+
+    if (dias < 0) {
+      meses--;
+      const ultimoDiaMesAnterior = new Date(
+        agora.getFullYear(),
+        agora.getMonth(),
+        0
+      ).getDate();
+
+      dias += ultimoDiaMesAnterior;
+    }
+
+    if (meses < 0) {
+      anos--;
+      meses += 12;
+    }
+
+    const diferenca = agora - dataInicio;
+
+const totalHoras = Math.floor(diferenca / (1000 * 60 * 60));
+const diasTotais = Math.floor(diferenca / (1000 * 60 * 60 * 24));
+
+const horas = agora.getHours();
+const minutos = agora.getMinutes();
+const segundos = agora.getSeconds();
+
+document.getElementById("anos").innerText = anos;
+document.getElementById("meses").innerText = meses;
+document.getElementById("dias").innerText = dias;
+document.getElementById("horas").innerText = formatar(horas);
+document.getElementById("minutos").innerText = formatar(minutos);
+document.getElementById("segundos").innerText = formatar(segundos);
+
+document.getElementById("totalHoras").innerText =
+  totalHoras.toLocaleString("pt-BR");
+
+const elementoDiasTotais = document.getElementById("diasTotais");
+const elementoHorasTotaisConexao = document.getElementById("horasTotaisConexao");
+
+if (elementoDiasTotais) {
+  elementoDiasTotais.innerText = diasTotais.toLocaleString("pt-BR");
+}
+
+if (elementoHorasTotaisConexao) {
+  elementoHorasTotaisConexao.innerText = totalHoras.toLocaleString("pt-BR");
+}
+  }
+
+  function formatar(numero) {
+    return numero < 10 ? "0" + numero : numero;
+  }
+
+  atualizarTempo();
+  setInterval(atualizarTempo, 1000);
+
+function criarCoracoesFinal() {
+  const final = document.getElementById("final");
+
+  setInterval(() => {
+    const coracao = document.createElement("div");
+    coracao.classList.add("coracao-flutuante");
+    coracao.innerHTML = "❤️";
+
+    coracao.style.left = Math.random() * 100 + "%";
+    coracao.style.fontSize = Math.random() * 24 + 18 + "px";
+    coracao.style.animationDuration = Math.random() * 3 + 4 + "s";
+
+    final.appendChild(coracao);
+
+    setTimeout(() => {
+      coracao.remove();
+    }, 7000);
+  }, 250);
+}
+
+criarCoracoesFinal();
+
+</script>
+
+</body>
+</html>
